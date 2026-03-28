@@ -2,7 +2,7 @@ import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 const projects = [
@@ -41,19 +41,21 @@ const projects = [
 const Work = () => {
   const container = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       let translateX: number = 0;
 
       function setTranslateX() {
-        const box = document.getElementsByClassName("work-box");
-        const rectLeft = document
-          .querySelector(".work-container")!
-          .getBoundingClientRect().left;
+        const box = container.current?.querySelectorAll(".work-box") as NodeListOf<HTMLElement>;
+        const workContainer = container.current?.querySelector(".work-container");
+        
+        if (!box || box.length === 0 || !workContainer) return;
+        
+        const rectLeft = workContainer.getBoundingClientRect().left;
         const rect = box[0].getBoundingClientRect();
         const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
-        let padding: number =
-          parseInt(window.getComputedStyle(box[0]).padding) / 2;
+        let padding: number = parseInt(window.getComputedStyle(box[0]).padding) / 2;
+        
         translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
       }
 
@@ -61,7 +63,7 @@ const Work = () => {
 
       let timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: ".work-section",
+          trigger: container.current,
           start: "top top",
           end: `+=${translateX}`, // Use actual scroll width
           scrub: true,
@@ -70,10 +72,13 @@ const Work = () => {
         },
       });
 
-      timeline.to(".work-flex", {
-        x: -translateX,
-        ease: "none",
-      });
+      const workFlex = container.current?.querySelector(".work-flex");
+      if (workFlex) {
+        timeline.to(workFlex, {
+          x: -Math.max(translateX, 0), // prevent NaN or negative weirdness 
+          ease: "none",
+        });
+      }
     }, container);
 
     return () => ctx.revert();
