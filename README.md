@@ -3,7 +3,7 @@
 This repository contains the open-source version of my personal portfolio website.  
 Feel free to explore the code and use it for learning and inspiration.
 
----
+------------------------------------------------------
 
 ## ⚠️ Usage Notice
 
@@ -51,11 +51,7 @@ However:
 
 Any usage, extraction, or redistribution of that avatar from my live website is strictly prohibited.
 
----
-
-![Protfolio-Preview](https://github.com/user-attachments/assets/3c4557e7-6392-4928-b8a9-7b2476ef4edd)
-
----
+-----------------------------------------
 
 ## 📄 License
 
