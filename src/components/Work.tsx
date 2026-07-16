@@ -7,34 +7,25 @@ import { useLayoutEffect, useRef } from "react";
 gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
-    name: "AI Restaurant Booking",
-    category: "AI Web App",
-    tools: "HTML, CSS, JS, Tailwind, n8n, Clerk",
-    image: "/images/resturant.png"
+    name: "Tutor Quest",
+    category: "Localized Learning Platform",
+    tools: "React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui, Supabase (PostgreSQL), RLS",
+    image: "/images/tutor_quest.png",
+    link: "https://tutor-quest-hub.vercel.app/"
   },
   {
-    name: "Online Book Store",
-    category: "E-Commerce",
-    tools: "HTML, CSS, JS, Clerk, MongoDB",
-    image: "/images/book_store.png"
+    name: "FeedSense",
+    category: "AI-Powered Feedback Platform",
+    tools: "React 18, TypeScript, Tailwind, Custom GRU Engine, Supabase",
+    image: "/images/feedsense.png",
+    link: "https://feedsense.vercel.app/"
   },
   {
     name: "Student Performance Predictor",
     category: "AI/ML App",
     tools: "HTML, CSS, JS, Tailwind, Three.js, Flask, SQL",
-    image: "/images/student_performance.png"
-  },
-  {
-    name: "Trend E-Commerce",
-    category: "Frontend Design",
-    tools: "HTML, CSS, JS",
-    image: "/images/placeholder.webp"
-  },
-  {
-    name: "Smart Feedback Routing",
-    category: "AI Backend",
-    tools: "NLP Keywords, Data Routing",
-    image: "/images/placeholder.webp"
+    image: "/images/student_performance.png",
+    link: "https://student-performance-prediction-rho.vercel.app/"
   }
 ];
 
@@ -85,7 +76,7 @@ const Work = () => {
   }, [projects.length]);
 
   return (
-    <div ref={container} className="work-section" id="work" style={{ backgroundColor: "var(--backgroundColor)", zIndex: 10, position: "relative" }}>
+    <div ref={container} className="work-section" id="work" style={{ backgroundColor: "var(--backgroundColor)", zIndex: 20, position: "relative" }}>
       <div className="work-container section-container">
         <h2>
           My <span>Work</span>
@@ -104,6 +95,19 @@ const Work = () => {
                 </div>
                 <h4>Tools and features</h4>
                 <p>{project.tools}</p>
+                {project.link && (
+                  <div style={{ marginTop: "1rem" }}>
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="project-link"
+                      style={{ color: "var(--accentColor)", textDecoration: "underline", fontSize: "1rem", fontWeight: "bold" }}
+                    >
+                      View Live Project ↗
+                    </a>
+                  </div>
+                )}
               </div>
               <WorkImage image={project.image} alt={project.name} />
             </div>

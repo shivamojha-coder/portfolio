@@ -1,225 +1,69 @@
-import * as THREE from "three";
-import { useRef, useMemo, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
-import { EffectComposer, N8AO } from "@react-three/postprocessing";
-import {
-  BallCollider,
-  Physics,
-  RigidBody,
-  CylinderCollider,
-  RapierRigidBody,
-} from "@react-three/rapier";
+import React from "react";
+import "./styles/SkillsMarquee.css";
+import { FaCss3Alt, FaJava } from "react-icons/fa6";
+import { 
+  SiJavascript, SiTypescript, SiC, SiCplusplus, SiPython, SiMysql, SiPhp,
+  SiFramer, SiVite, SiGit, SiGithub, SiFigma, SiFirebase, SiMongodb, SiExpress,
+  SiBootstrap, SiJquery, SiGitlab, SiDocker, SiNetlify, SiVercel, SiNextdotjs
+} from "react-icons/si";
 
-const textureLoader = new THREE.TextureLoader();
-const imageUrls = [
-  "/images/javascript.webp",
-  "/images/mysql.webp",
-  "/images/html.png",
-  "/images/css.png",
-  "/images/tailwind.png",
-  "/images/n8n.png",
-  "/images/clerk.png",
-  "/images/threejs.png",
-  "/images/flask.png",
-  "/images/mongo.webp",
+type SkillItem = {
+  name: string;
+  icon: React.ReactNode;
+};
+
+const row1: SkillItem[] = [
+  { name: "CSS3", icon: <FaCss3Alt color="#1572B6" /> },
+  { name: "JavaScript", icon: <SiJavascript color="#F7DF1E" /> },
+  { name: "TypeScript", icon: <SiTypescript color="#3178C6" /> },
+  { name: "Java", icon: <FaJava color="#007396" /> },
+  { name: "C", icon: <SiC color="#A8B9CC" /> },
+  { name: "C++", icon: <SiCplusplus color="#00599C" /> },
+  { name: "Python", icon: <SiPython color="#3776AB" /> },
+  { name: "SQL", icon: <SiMysql color="#4479A1" /> },
+  { name: "PHP", icon: <SiPhp color="#777BB4" /> },
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
 
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+const row2: SkillItem[] = [
+  { name: "Framer Motion", icon: <SiFramer color="#0055FF" /> },
+  { name: "Vite", icon: <SiVite color="#646CFF" /> },
+  { name: "Git", icon: <SiGit color="#F05032" /> },
+  { name: "GitHub", icon: <SiGithub color="#ffffff" /> },
+  { name: "Figma", icon: <SiFigma color="#F24E1E" /> },
+  { name: "Firebase", icon: <SiFirebase color="#FFCA28" /> },
+  { name: "MongoDB", icon: <SiMongodb color="#47A248" /> },
+  { name: "Express", icon: <SiExpress color="#ffffff" /> },
+];
 
-const spheres = [...Array(30)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
-}));
+const row3: SkillItem[] = [
+  { name: "Bootstrap", icon: <SiBootstrap color="#7952B3" /> },
+  { name: "jQuery", icon: <SiJquery color="#0769AD" /> },
+  { name: "GitLab", icon: <SiGitlab color="#FCA121" /> },
+  { name: "Docker", icon: <SiDocker color="#2496ED" /> },
+  { name: "Netlify", icon: <SiNetlify color="#00C7B7" /> },
+  { name: "Vercel", icon: <SiVercel color="#000000" /> },
+  { name: "Next.js", icon: <SiNextdotjs color="#ffffff" /> },
+];
 
-type SphereProps = {
-  vec?: THREE.Vector3;
-  scale: number;
-  r?: typeof THREE.MathUtils.randFloatSpread;
-  material: THREE.MeshPhysicalMaterial;
-  isActive: boolean;
-};
-
-function SphereGeo({
-  vec = new THREE.Vector3(),
-  scale,
-  r = THREE.MathUtils.randFloatSpread,
-  material,
-  isActive,
-}: SphereProps) {
-  const api = useRef<RapierRigidBody | null>(null);
-
-  useFrame((_state, delta) => {
-    if (!isActive) return;
-    delta = Math.min(0.1, delta);
-    
-    // Calculate direction from the current position to the offset origin (0, -3, 0)
-    const pos = api.current!.translation();
-    const impulse = vec
-      .set(pos.x, pos.y + 3, pos.z) // Shifted gravity center down to avoid the heading naturally
-      .normalize()
-      .multiply(
-        new THREE.Vector3(
-          -50 * delta * scale,
-          -150 * delta * scale,
-          -50 * delta * scale
-        )
-      );
-
-    api.current?.applyImpulse(impulse, true);
-  });
-
-  return (
-    <RigidBody
-      linearDamping={0.75}
-      angularDamping={0.15}
-      friction={0.2}
-      position={[r(20), r(20) - 25, r(20) - 10]}
-      ref={api}
-      colliders={false}
-    >
-      <BallCollider args={[scale]} />
-      <CylinderCollider
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.2 * scale]}
-        args={[0.15 * scale, 0.275 * scale]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        scale={scale}
-        geometry={sphereGeometry}
-        material={material}
-        rotation={[0.3, 1, 1]}
-      />
-    </RigidBody>
-  );
-}
-
-type PointerProps = {
-  vec?: THREE.Vector3;
-  isActive: boolean;
-};
-
-function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
-  const ref = useRef<RapierRigidBody>(null);
-
-  useFrame(({ pointer, viewport }) => {
-    if (!isActive) return;
-    // Exactly follow pointer so the invisible collider actually hits the spheres
-    const targetVec = vec.lerp(
-      new THREE.Vector3(
-        (pointer.x * viewport.width) / 2,
-        (pointer.y * viewport.height) / 2,
-        0
-      ),
-      0.2
-    );
-    ref.current?.setNextKinematicTranslation(targetVec);
-  });
-
-  return (
-    <RigidBody
-      position={[100, 100, 100]}
-      type="kinematicPosition"
-      colliders={false}
-      ref={ref}
-    >
-      <BallCollider args={[2]} />
-    </RigidBody>
-  );
-}
-
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-const TechStack = () => {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    // Force GSAP to recalculate positions after this component mounts via Suspense
-    ScrollTrigger.refresh();
-    
-    const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
-      setIsActive(scrollY > threshold);
-    };
-    document.querySelectorAll(".header a").forEach((elem) => {
-      const element = elem as HTMLAnchorElement;
-      element.addEventListener("click", () => {
-        const interval = setInterval(() => {
-          handleScroll();
-        }, 10);
-        setTimeout(() => {
-          clearInterval(interval);
-        }, 1000);
-      });
-    });
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  const materials = useMemo(() => {
-    return textures.map(
-      (texture) =>
-        new THREE.MeshPhysicalMaterial({
-          map: texture,
-          emissive: "#ffffff",
-          emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
-        })
-    );
-  }, []);
-
-  return (
-    <div className="techstack">
-      <h2> My Techstack</h2>
-
-      <Canvas
-        shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
-        camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
-        className="tech-canvas"
-      >
-        <ambientLight intensity={1} />
-        <spotLight
-          position={[20, 20, 25]}
-          penumbra={1}
-          angle={0.2}
-          color="white"
-          castShadow
-          shadow-mapSize={[512, 512]}
-        />
-        <directionalLight position={[0, 5, -4]} intensity={2} />
-        <Physics gravity={[0, 0, 0]}>
-          <Pointer isActive={isActive} />
-          {spheres.map((props, i) => (
-            <SphereGeo
-              key={i}
-              {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
-              isActive={isActive}
-            />
-          ))}
-        </Physics>
-        <Environment
-          files="/models/char_enviorment.hdr"
-          environmentIntensity={0.5}
-          environmentRotation={[0, 4, 2]}
-        />
-        <EffectComposer enableNormalPass={false}>
-          <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-        </EffectComposer>
-      </Canvas>
+const SkillRow = ({ items, direction }: { items: SkillItem[]; direction: "left" | "right" }) => (
+  <div className="marquee-row">
+    <div className={`marquee-track ${direction === "right" ? "marquee-reverse" : ""}`}>
+      {[...items, ...items].map((item, i) => (
+        <span key={i} className="skill-pill">
+          {item.icon} {item.name}
+        </span>
+      ))}
     </div>
-  );
-};
+  </div>
+);
+
+const TechStack = () => (
+  <div className="skills-section" style={{ position: "relative", zIndex: 20, background: "var(--backgroundColor)" }}>
+    <h2 className="skills-title">SKILLS</h2>
+    <SkillRow items={row1} direction="left" />
+    <SkillRow items={row2} direction="right" />
+    <SkillRow items={row3} direction="left" />
+  </div>
+);
 
 export default TechStack;

@@ -1,0 +1,94 @@
+.idcard-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.idcard-strap {
+  width: 6px;
+  height: 60px;
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+.idcard-clip {
+  width: 36px;
+  height: 14px;
+  background: #94a3b8;
+  border-radius: 4px;
+  margin-top: -2px;
+  z-index: 2;
+}
+
+.idcard {
+  width: 280px;
+  height: 380px;
+  background: linear-gradient(145deg, #0c1a2e, #123249);
+  border: 2px solid #38bdf8;
+  border-radius: 18px;
+  padding: 6px;
+  margin-top: -4px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+  animation: idcard-sway 4s ease-in-out infinite;
+  transform-origin: top center;
+  position: relative;
+}
+
+@keyframes idcard-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.idcard-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  position: relative;
+}
+
+
+
+.idcard-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.idcard-name {
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.idcard-role {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.idcard-tags {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.idcard-tags span {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}

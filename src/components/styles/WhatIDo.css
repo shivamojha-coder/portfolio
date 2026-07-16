@@ -19,11 +19,13 @@
   z-index: 9;
 }
 .what-box h2 {
-  font-size: calc(4vw + 25px);
-  line-height: calc(4vw + 20px);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 4vw + 25px, 80px);
+  line-height: 1.1;
   font-weight: 600;
   margin-right: 10%;
   margin-bottom: 100px;
+  letter-spacing: -0.02em;
 }
 
 .hat-h2 {
@@ -63,22 +65,27 @@
   padding: 10px 50px;
 }
 .what-content h3 {
-  font-size: 35px;
-  letter-spacing: 1px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: 0;
   margin: 0;
 }
 .what-content p {
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: 200;
-  letter-spacing: 0.7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: 0;
+  max-width: 70ch;
 }
 .what-content h4 {
-  font-weight: 300;
-  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
   margin: 0px;
   font-size: 14px;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 .what-content-in {
   opacity: 0;
@@ -209,11 +216,11 @@
   overflow: hidden;
 }
 .what-content-in h5 {
-  font-weight: 300;
-  opacity: 0.5;
-  font-size: 12px;
-  letter-spacing: 1px;
-  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  opacity: 0.6;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
   margin-bottom: 5px;
 }
 @keyframes whatBorders {
@@ -232,11 +239,12 @@
   flex-wrap: wrap;
 }
 .what-tags {
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 400;
-  padding: 2px 7px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 1px solid #ffffff50;
+  font-weight: 500;
+  padding: 4px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
 }
 @media only screen and (max-width: 1600px) {

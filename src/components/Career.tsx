@@ -40,12 +40,12 @@ const Career = () => {
             <div className="career-info-in">
               <div className="career-role">
                 <h4>B.Tech in CSE (AI & ML)</h4>
-                <h5>2nd Year (Lateral Entry)</h5>
+                <h5>3rd Year (Lateral Entry)</h5>
               </div>
               <h3>NOW</h3>
             </div>
             <p>
-              Currently in the 2nd year of my B.Tech degree, specializing in Computer Science Engineering with a focus on Artificial Intelligence and Machine Learning. I am actively expanding my skill set in modern web development and advanced AI technologies.
+              Currently in the 3rd year of my B.Tech degree, specializing in Computer Science Engineering with a focus on Artificial Intelligence and Machine Learning. I am actively expanding my skill set in modern web development and advanced AI technologies.
             </p>
           </div>
         </div>

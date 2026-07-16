@@ -13,9 +13,10 @@
 }
 
 .career-section h2 {
-  font-size: 70px;
-  line-height: 70px;
-  font-weight: 400;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.1;
+  font-weight: 600;
   text-align: center;
   background: linear-gradient(0deg, #7f40ff, #ffffff);
   background-clip: text;
@@ -24,6 +25,7 @@
   color: transparent;
   margin-top: 50px;
   margin-bottom: 90px;
+  letter-spacing: -0.02em;
 }
 .career-section h2 > span {
   font-family: "Geist", sans-serif;
@@ -42,9 +44,13 @@
 }
 .career-info-box p {
   width: 40%;
-  font-size: 18px;
-  font-weight: 300;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  max-width: 65ch;
   margin: 0;
+  color: #F8FAFC;
 }
 .career-info-in {
   display: flex;
@@ -53,26 +59,28 @@
   gap: 50px;
 }
 .career-info h3 {
-  font-size: 48px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
   margin: 0;
-  font-weight: 500;
-  line-height: 45px;
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 .career-info h4 {
-  font-size: 33px;
-  line-height: 30px;
-  letter-spacing: 0.8px;
-  font-weight: 500;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.2;
+  font-weight: 600;
   margin: 0;
 }
 .career-info h5 {
-  font-weight: 400;
-  letter-spacing: 0.7px;
-  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
   text-transform: capitalize;
   margin: 10px 0px;
   color: var(--accentColor);
+  letter-spacing: 0.02em;
 }
 .career-timeline {
   position: absolute;
